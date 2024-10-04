@@ -1,28 +1,33 @@
-<!-- C:\Users\Pavlu4ini\PycharmProjects\GitHubMirrorApp\templates\view_code.html -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitHub Mirror App - View Code</title>
+    <title>GitHub Mirror App - Repository Code: {{ repo_url }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>Repository Code</h1>
+<body class="bg-gray-900 text-white">
+    <div class="container mx-auto px-4 py-8">
+        <header class="bg-gray-800 p-4 rounded mb-4">
+            <h1 class="text-2xl font-bold">Repository Code</h1>
+            <h2 class="text-lg">Repository Code: {{ repo_url }}</h2>
+        </header>
 
-    <!-- Кнопка обновления кода -->
-    <form action="/view_code" method="get">
-        <input type="hidden" name="repo_url" value="{{ repo_url }}">
-        <button type="submit">Refresh</button>
-    </form>
+        <form action="/view_code" method="get" class="mb-4">
+            <input type="hidden" name="repo_url" value="{{ repo_url }}">
+            <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Refresh</button>
+        </form>
 
-    <!-- Кнопка возврата на страницу ввода ссылки -->
-    <form action="/" method="get">
-        <button type="submit">Back to Input</button>
-    </form>
+        <form action="/" method="get" class="mb-4">
+            <button class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" type="submit">Back to Input</button>
+        </form>
 
-    <div>
-        <div>{{ code_html|safe }}</div>
+        <h2 class="text-lg mb-2">Project Structure</h2>
+        <pre class="bg-gray-800 p-4 rounded">{{ structure_html|safe }}</pre>
+
+        <div>
+            <div class="bg-gray-800 p-4 rounded">{{ code_html|safe }}</div>
+        </div>
     </div>
 </body>
 </html>
