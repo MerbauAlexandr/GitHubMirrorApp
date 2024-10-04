@@ -1,10 +1,28 @@
+<!-- C:\Users\Pavlu4ini\PycharmProjects\GitHubMirrorApp\templates\view_code.html -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Mirror App - View Code</title>
 </head>
 <body>
+    <h1>Repository Code</h1>
 
+    <!-- Кнопка обновления кода -->
+    <form action="/view_code" method="get">
+        <input type="hidden" name="repo_url" value="{{ repo_url }}">
+        <button type="submit">Refresh</button>
+    </form>
+
+    <!-- Кнопка возврата на страницу ввода ссылки -->
+    <form action="/" method="get">
+        <button type="submit">Back to Input</button>
+    </form>
+
+    <div>
+        <div>{{ code_html|safe }}</div>
+    </div>
 </body>
 </html>
