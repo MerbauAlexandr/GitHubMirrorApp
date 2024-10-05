@@ -47,15 +47,21 @@ def view_code():
             for file in files:
                 file_path = os.path.join(root, file)
                 if file.endswith(('.py', '.html', '.txt', '.json', '.yaml', '.yml', '.md')):
-                    with open(file_path, 'r', encoding='utf-8') as f:
-                        code = f.read()
-                        formatter = HtmlFormatter(full=True, linenos=True, cssclass="codehilite")
-                        highlighted_code = highlight(code, PythonLexer(), formatter)
-                        code_html += f"<h2 class='text-xl font-bold underline'>{project_name}/{file}</h2>" + highlighted_code + "<br><br>"  # Полный путь в заголовке с подчёркиванием
+                    try:
+                        with open(file_path, 'r', encoding='utf-8') as f:
+                            code = f.read()
+                    except UnicodeDecodeError:
+                        with open(file_path, 'r', encoding='latin-1') as f:
+                            code = f.read()
+
+                    formatter = HtmlFormatter(full=True, linenos=True, cssclass="codehilite")
+                    highlighted_code = highlight(code, PythonLexer(), formatter)
+                    code_html += f"<h2 class='text-xl font-bold underline'>{project_name}/{file}</h2>" + highlighted_code + "<br><br>"  # Полный путь в заголовке с подчёркиванием
                 elif file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp')):
                     code_html += f"<h2 class='text-xl font-bold underline'>{project_name}/{file}</h2><img src='{file_path}' alt='{file}' style='max-width: 100%;'><br><br>"  # Подчёркивание и путь для изображений
 
     return render_template('view_code.html', code_html=code_html, structure_html=structure_html, repo_url=repo_url)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
+
